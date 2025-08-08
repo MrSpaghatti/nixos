@@ -31,19 +31,4 @@
 	};
 
 	# ====== Theming & Fonts ======
-	#gtk = {
-	#	enable = true;
-	#	theme = {
-	#		name = "Dracula";
-	#		package = pkgs.dracula-theme;
-	#	};
-	#	iconTheme = {
-	#		name = "Papirus";
-	#		package = pkgs.papirus-icon-theme;
-	#	};
-	#	cursorTheme = {
-	#		name = "Adwaita";
-	#		package = pkgs.gnome.adwaita-icon-theme;
-	#	};
-	#};
 }

@@ -13,19 +13,12 @@
 		<home-manager/nixos>
 
 		# import the rest of our modular configurations
-		#./config/system.nix
-		#./config/graphics.nix
-		#./config/services.nix
-		#./config/packages.nix
-		#./config/user.nix
-		#./config/home.nix
-
-		/home/spag/conf/home.nix
-		/home/spag/conf/user.nix
-		/home/spag/conf/packages.nix
-		/home/spag/conf/services.nix
-		/home/spag/conf/graphics.nix
-		/home/spag/conf/system.nix
+		./config/system.nix
+		./config/graphics.nix
+		./config/services.nix
+		./config/packages.nix
+		./config/user.nix
+		./config/home.nix
 	];
 
 	system.stateVersion = "25.05";

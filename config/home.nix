@@ -28,44 +28,64 @@
 		programs.fish.enable = true;
 		programs.starship.enable = true;
 
-		wayland.windowManager.sway = {
-			enable = true;
-			config = rec {
-				modififer = "Mod4"; # "Mod4" is the Super/Windows Key
-				terminal = "${pks.foot}/bin/foot";
-				menu = "${pkgs.rofi-wayland}/bin/rofi -show drun"
-				startup = [
-					{command = "mako";}
-					{command = "waybar";}
-				];
-
-				keybindings = lib.mkOptionDefault {
-					"Mod4+Return" = "exec ${config.programs.sway.config.terminal}"
-				};
-			};
-		};
-
 		# ====== Theming ======
 		gtk = {
 			enable = true;
 			theme = {
-				name = "Dracula";
-				package = pkgs.dracula-theme;
+				name = "Nordic-darker";
+				package = pkgs.nordic;
 			};
 			iconTheme = {
-				name = "Papirus";
-				package = pkgs.papirus-icon-theme;
+				name = "Tela-circle-nord";
+				package = pkgs.tela-circle-icon-theme;
 			};
 			cursorTheme = {
-				name = "Adwaita";
-				package = pkgs.adwaita-icon-theme;
+				name = "capitaine-cursors";
+				package = pkgs.capitaine-cursors;
 			};
+            font = {
+                name = "Noto Sans";
+                size = 10;
+            };
 		};
 
 		qt = {
 			enable = true;
 			platformTheme = "gtk";
 		};
+
+        # ====== Dotfiles ======
+        home.file = {
+            ".config/sway/config".source = ./../dotfiles/sway/config;
+            ".config/sway/config.d/application_defaults".source = ./../dotfiles/sway/config.d/application_defaults;
+            ".config/sway/config.d/autostart_applications".source = ./../dotfiles/sway/config.d/autostart_applications;
+            ".config/sway/config.d/cheatsheet_hint".source = ./../dotfiles/sway/config.d/cheatsheet_hint;
+            ".config/sway/config.d/default".source = ./../dotfiles/sway/config.d/default;
+            ".config/sway/config.d/input".source = ./../dotfiles/sway/config.d/input;
+            ".config/sway/config.d/output".source = ./../dotfiles/sway/config.d/output;
+            ".config/sway/config.d/swayfx".source = ./../dotfiles/sway/config.d/swayfx;
+            ".config/sway/config.d/theme".source = ./../dotfiles/sway/config.d/theme;
+            ".config/sway/scripts/advance_workspace.sh" = { source = ./../dotfiles/sway/scripts/advance_workspace.sh; executable = true; };
+            ".config/sway/scripts/bluetooth_toggle.sh" = { source = ./../dotfiles/sway/scripts/bluetooth_toggle.sh; executable = true; };
+            ".config/sway/scripts/cheatsheet_hint.sh" = { source = ./../dotfiles/sway/scripts/cheatsheet_hint.sh; executable = true; };
+            ".config/sway/scripts/hidpi_1.5.sh" = { source = ./../dotfiles/sway/scripts/hidpi_1.5.sh; executable = true; };
+            ".config/sway/scripts/import-gsettings" = { source = ./../dotfiles/sway/scripts/import-gsettings; executable = true; };
+            ".config/sway/scripts/screenshot_display.sh" = { source = ./../dotfiles/sway/scripts/screenshot_display.sh; executable = true; };
+            ".config/sway/scripts/screenshot_window.sh" = { source = ./../dotfiles/sway/scripts/screenshot_window.sh; executable = true; };
+            ".config/sway/scripts/swayfader.py" = { source = ./../dotfiles/sway/scripts/swayfader.py; executable = true; };
+            ".config/waybar/config".source = ./../dotfiles/waybar/config;
+            ".config/waybar/style.css".source = ./../dotfiles/waybar/style.css;
+            ".config/foot/foot.ini".source = ./../dotfiles/foot/foot.ini;
+            ".config/fuzzel/fuzzel.ini".source = ./../dotfiles/fuzzel/fuzzel.ini;
+            ".config/gtk-3.0/settings.ini".source = ./../dotfiles/gtk-3.0/settings.ini;
+            ".config/mako/config".source = ./../dotfiles/mako/config;
+            ".config/nwg-drawer/drawer.css".source = ./../dotfiles/nwg-drawer/drawer.css;
+            ".config/gtklock/config.ini".source = ./../dotfiles/gtklock/config.ini;
+            ".config/gtklock/style.css".source = ./../dotfiles/gtklock/style.css;
+            ".config/swayr/config.toml".source = ./../dotfiles/swayr/config.toml;
+            ".config/swayr/waybar_config.toml".source = ./../dotfiles/swayr/waybar_config.toml;
+            ".azotebg" = { source = ./../dotfiles/azotebg; executable = true; };
+        };
 
 		# let home manager manage itself
 		programs.home-manager.enable = true;
