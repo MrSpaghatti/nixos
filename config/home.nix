@@ -6,6 +6,7 @@
 {
 	home-manager.users.spag = {
 		home.stateVersion = "25.05";
+        home.backupFileExtension = "backup";
 
 		home.username = "spag";
 		home.homeDirectory = "/home/spag";
@@ -51,7 +52,7 @@
 
 		qt = {
 			enable = true;
-			platformTheme = "gtk";
+			platformTheme.name = "gtk";
 		};
 
         # ====== Dotfiles ======

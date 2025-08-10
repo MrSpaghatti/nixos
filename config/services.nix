@@ -12,7 +12,7 @@
 	services.printing.enable = true; # enable CUPS
 
 	# ====== Sound ======
-	hardware.pulseaudio.enable = false; # avoid conflicts
+	services.pulseaudio.enable = false; # avoid conflicts
 	security.rtkit.enable = true; # real-time kernel scheduler for low-latency audio
 	services.pipewire = {
 		enable = true;
