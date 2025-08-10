@@ -5,21 +5,23 @@
 { config, lib, pkgs, ... }:
 
 {
-	imports = [
-		# hardware-specific configs
-		./hardware-configuration.nix
+  imports =
+    [
+      # hardware-specific configs
+      # This file is not in the repository, so we assume it's in the default location.
+      /etc/nixos/hardware-configuration.nix
 
-		# home manager for user-specific dotfiles and packages
-		<home-manager/nixos>
-
-		# import the rest of our modular configurations
-		./config/system.nix
-		./config/graphics.nix
-		./config/services.nix
-		./config/packages.nix
-		./config/user.nix
-		./config/home.nix
-	];
+      # home manager for user-specific dotfiles and packages
+      <home-manager/nixos>
+    ]
+    ++ (map (p: ./config + "/${p}") [
+      "system.nix"
+      "graphics.nix"
+      "services.nix"
+      "packages.nix"
+      "user.nix"
+      "home.nix"
+    ]);
 
 	system.stateVersion = "25.05";
 }
