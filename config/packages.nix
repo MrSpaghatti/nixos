@@ -6,7 +6,7 @@
 {
 	# ====== Fonts ======
 	fonts.packages = with pkgs; [
-		nerd-fonts.jetbrains-mono
+		(nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
 		noto-fonts
 		font-awesome
 	];
@@ -34,11 +34,12 @@
 		pavucontrol # pulseaudio volume control
 		mpv # media player
 		mako # notifs daemon
-		swww # wayland wallpapers
+		azote # wayland wallpapers
 		grim # screenshot tool
 		slurp # region selector
 		swappy # screenshot annotator
 		wl-clipboard # cliboard tool
+		wl-paste
 		cliphist # clipboard history manager
 		kanshi # display profile manager
 		gtklock # screen locker
@@ -51,7 +52,7 @@
 		playerctl
 		autotiling
 		dex
-		swayr
+		swayrd
 		python3
 
 		# Shell & Prompt
