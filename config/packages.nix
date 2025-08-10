@@ -66,6 +66,7 @@
 		nordic
 		tela-circle-icon-theme
 		capitaine-cursors
+		adwaita-icon-theme
 		libsForQt5.breeze-qt5 # for theming qt5 apps
 		nwg-launchers
 

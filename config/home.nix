@@ -40,12 +40,26 @@
 				package = pkgs.tela-circle-icon-theme;
 			};
 			cursorTheme = {
-				name = "capitaine-cursors";
-				package = pkgs.capitaine-cursors;
+				name = "Adwaita";
+				package = pkgs.adwaita-icon-theme;
 			};
             font = {
                 name = "Noto Sans";
                 size = 10;
+            };
+            settings = {
+                "gtk-cursor-theme-size" = 24;
+                "gtk-toolbar-style" = "GTK_TOOLBAR_ICONS";
+                "gtk-toolbar-icon-size" = "GTK_ICON_SIZE_LARGE_TOOLBAR";
+                "gtk-button-images" = 0;
+                "gtk-menu-images" = 0;
+                "gtk-enable-event-sounds" = 0;
+                "gtk-enable-input-feedback-sounds" = 0;
+                "gtk-xft-antialias" = 1;
+                "gtk-xft-hinting" = 1;
+                "gtk-xft-hintstyle" = "hintslight";
+                "gtk-xft-rgba" = "rgb";
+                "gtk-application-prefer-dark-theme" = 1;
             };
 		};
 
@@ -77,7 +91,6 @@
             ".config/waybar/style.css".source = ./../dotfiles/waybar/style.css;
             ".config/foot/foot.ini".source = ./../dotfiles/foot/foot.ini;
             ".config/fuzzel/fuzzel.ini".source = ./../dotfiles/fuzzel/fuzzel.ini;
-            ".config/gtk-3.0/settings.ini".source = ./../dotfiles/gtk-3.0/settings.ini;
             ".config/mako/config".source = ./../dotfiles/mako/config;
             ".config/nwg-drawer/drawer.css".source = ./../dotfiles/nwg-drawer/drawer.css;
             ".config/gtklock/config.ini".source = ./../dotfiles/gtklock/config.ini;
