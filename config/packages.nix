@@ -6,8 +6,8 @@
 {
 	# ====== Fonts ======
 	fonts.packages = with pkgs; [
-		nerd-fonts.fira-code
 		nerd-fonts.jetbrains-mono
+		noto-fonts
 		font-awesome
 	];
 
@@ -15,7 +15,7 @@
 	environment.systemPackages = with pkgs; [
 		# Essentials
 		foot #terminal emulator
-		rofi-wayland # app launcher
+		fuzzel # app launcher
 		micro # cli text editor
 		ox # tui text editor
 		xfce.mousepad # gui text editor
@@ -41,10 +41,18 @@
 		wl-clipboard # cliboard tool
 		cliphist # clipboard history manager
 		kanshi # display profile manager
-		swaylock-effects # screen locker
+		gtklock # screen locker
 		btop # sysmon
-		nix-search-cli # fast package searching
 		meld # visual diff and merge tool
+		jq
+		swayidle
+		brightnessctl
+		pamixer
+		playerctl
+		autotiling
+		dex
+		swayr
+		python3
 
 		# Shell & Prompt
 		fish # shell
@@ -54,9 +62,15 @@
 		tlrc # tldr rust
 
 		# Theming
-		adwaita-icon-theme # default gtk icons
-		dracula-theme # dracula gtk theme
+		nordic
+		tela-circle-icon-theme
+		capitaine-cursors
+		adwaita-icon-theme
 		libsForQt5.breeze-qt5 # for theming qt5 apps
+		nwg-launchers
+
+		# Garuda extras
+		# garuda-wallpapers # This package probably doesn't exist in nixpkgs
 	];
 
 	programs.fish.enable = true;
