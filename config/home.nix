@@ -60,7 +60,12 @@
             ".config/sway/config.d/application_defaults".source = ./../dotfiles/sway/config.d/application_defaults;
             ".config/sway/config.d/autostart_applications".source = ./../dotfiles/sway/config.d/autostart_applications;
             ".config/sway/config.d/cheatsheet_hint".source = ./../dotfiles/sway/config.d/cheatsheet_hint;
-            ".config/sway/config.d/default".source = ./../dotfiles/sway/config.d/default;
+            ".config/sway/config.d/default" = {
+                source = ./../dotfiles/sway/config.d/default;
+                substitutions = {
+                    "@foot_client_path@" = "${pkgs.foot}/bin/footclient";
+                };
+            };
             ".config/sway/config.d/input".source = ./../dotfiles/sway/config.d/input;
             ".config/sway/config.d/output".source = ./../dotfiles/sway/config.d/output;
             ".config/sway/config.d/swayfx".source = ./../dotfiles/sway/config.d/swayfx;
