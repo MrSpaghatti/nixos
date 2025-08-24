@@ -51,7 +51,7 @@
 		playerctl
 		autotiling
 		dex
-		swayrd
+		swayr
 		python3
 
 		# Shell & Prompt
