@@ -15,7 +15,7 @@ font pango:JetBrainsMono 10
 smart_borders on
 
 # Set wallpaper:
-exec ~/.azotebg
+exec ~/.set-wallpaper.sh
 
 # Title format for windows
 for_window [shell="xdg_shell"] title_format "%title (%app_id)"

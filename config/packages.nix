@@ -34,7 +34,7 @@
 		pavucontrol # pulseaudio volume control
 		mpv # media player
 		mako # notifs daemon
-		azote # wayland wallpapers
+		swww # wayland wallpapers
 		grim # screenshot tool
 		slurp # region selector
 		swappy # screenshot annotator

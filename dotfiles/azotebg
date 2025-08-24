@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-pkill swaybg
-swaybg -i '/usr/share/wallpapers/garuda-wallpapers/Garuda Broadwing.png' -m fill &

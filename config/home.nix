@@ -90,7 +90,7 @@
             ".config/gtklock/style.css".source = ./../dotfiles/gtklock/style.css;
             ".config/swayr/config.toml".source = ./../dotfiles/swayr/config.toml;
             ".config/swayr/waybar_config.toml".source = ./../dotfiles/swayr/waybar_config.toml;
-            ".azotebg" = { source = ./../dotfiles/azotebg; executable = true; };
+            ".set-wallpaper.sh" = { source = ./../dotfiles/.set-wallpaper.sh; executable = true; };
         };
 
 		# let home manager manage itself
