@@ -60,7 +60,14 @@
             ".config/sway/config.d/application_defaults".source = ./../dotfiles/sway/config.d/application_defaults;
             ".config/sway/config.d/autostart_applications".source = ./../dotfiles/sway/config.d/autostart_applications;
             ".config/sway/config.d/cheatsheet_hint".source = ./../dotfiles/sway/config.d/cheatsheet_hint;
-            ".config/sway/config.d/default".source = ./../dotfiles/sway/config.d/default;
+            ".config/sway/config.d/default".source =
+              let
+                configFile = ./../dotfiles/sway/config.d/default;
+              in
+              pkgs.runCommand "sway-default-config" { } ''
+                substitute ${configFile} $out \
+                  --replace "@foot_client_path@" "${pkgs.foot}/bin/footclient"
+              '';
             ".config/sway/config.d/input".source = ./../dotfiles/sway/config.d/input;
             ".config/sway/config.d/output".source = ./../dotfiles/sway/config.d/output;
             ".config/sway/config.d/swayfx".source = ./../dotfiles/sway/config.d/swayfx;
@@ -83,7 +90,7 @@
             ".config/gtklock/style.css".source = ./../dotfiles/gtklock/style.css;
             ".config/swayr/config.toml".source = ./../dotfiles/swayr/config.toml;
             ".config/swayr/waybar_config.toml".source = ./../dotfiles/swayr/waybar_config.toml;
-            ".azotebg" = { source = ./../dotfiles/azotebg; executable = true; };
+            ".set-wallpaper.sh" = { source = ./../dotfiles/.set-wallpaper.sh; executable = true; };
         };
 
 		# let home manager manage itself

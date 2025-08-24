@@ -12,6 +12,9 @@ exec hash dbus-update-activation-environment 2>/dev/null && \
 exec swayidle idlehint 1
 exec_always swayidle -w before-sleep "gtklock -d"
 
+# Wallpaper daemon
+exec swww init
+
 # Desktop notifications
 exec mako
 

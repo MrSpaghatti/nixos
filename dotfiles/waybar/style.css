@@ -45,7 +45,7 @@ nord15 #b48ead - (180,142,173)
 /* The whole bar */
 #waybar {
     color: #eceff4;
-    background-color: rgba(46,52,64,0.6);
+    background-color: rgba(46, 52, 64, 0.9);
     border-radius: 5px;
     font-family:JetBrainsMonoNerdFont;
     font-size: 13px;
@@ -100,6 +100,7 @@ tooltip label {
     box-shadow: 0 0 10px rgba(0,0,0,0.8);
     padding:.1rem 1rem;
     margin: 1px 1px;
+    border: 1px solid #81a1c1;
 }
 
 #window:hover,
@@ -155,7 +156,7 @@ tooltip label {
 }
 
 #workspaces button.focused {
-    border: 0.9px solid #eceff4;
+    border: 1.5px solid #81a1c1;
 }
 
 #cpu:hover,
