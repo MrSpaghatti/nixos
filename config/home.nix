@@ -66,7 +66,7 @@
               in
               pkgs.runCommand "sway-default-config" { } ''
                 substitute ${configFile} $out \
-                  --replace "@foot_client_path@" "${pkgs.foot}/bin/footclient"
+                  --replace "@foot_client_path@" "${pkgs.foot}/bin/foot"
               '';
             ".config/sway/config.d/input".source = ./../dotfiles/sway/config.d/input;
             ".config/sway/config.d/output".source = ./../dotfiles/sway/config.d/output;
