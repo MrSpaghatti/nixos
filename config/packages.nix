@@ -39,7 +39,6 @@
 		slurp # region selector
 		swappy # screenshot annotator
 		wl-clipboard # cliboard tool
-		wl-paste
 		cliphist # clipboard history manager
 		kanshi # display profile manager
 		gtklock # screen locker
