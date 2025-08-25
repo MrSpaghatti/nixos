@@ -82,7 +82,14 @@
             ".config/sway/scripts/swayfader.py" = { source = ./../dotfiles/sway/scripts/swayfader.py; executable = true; };
             ".config/waybar/config".source = ./../dotfiles/waybar/config;
             ".config/waybar/style.css".source = ./../dotfiles/waybar/style.css;
-            ".config/foot/foot.ini".source = ./../dotfiles/foot/foot.ini;
+            ".config/foot/foot.ini".source =
+              let
+                configFile = ./../dotfiles/foot/foot.ini;
+              in
+              pkgs.runCommand "foot-ini" { } ''
+                substitute ${configFile} $out \
+                  --replace "@fish_path@" "${pkgs.fish}/bin/fish"
+              '';
             ".config/fuzzel/fuzzel.ini".source = ./../dotfiles/fuzzel/fuzzel.ini;
             ".config/mako/config".source = ./../dotfiles/mako/config;
             ".config/nwg-drawer/drawer.css".source = ./../dotfiles/nwg-drawer/drawer.css;
