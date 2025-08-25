@@ -54,7 +54,7 @@
 		swayr
 		python3
 		yad
-		tigervnc
+		wayvnc
 
 		# Shell & Prompt
 		fish # shell
