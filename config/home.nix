@@ -54,6 +54,29 @@
 			platformTheme.name = "gtk";
 		};
 
+        programs.waybar = {
+            enable = true;
+            settings = {
+                mainBar = (builtins.fromJSON (builtins.readFile ./../dotfiles/waybar/config)) // {
+                    "custom/keyboard-layout" = {
+                        exec = "i=$(swaymsg -t get_inputs); echo \"$i\" | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4";
+                        format = "";
+                        "tooltip-format" = "L󰍽: cheatsheet\nLayout: {0}";
+                        interval = 30;
+                        signal = 1;
+                        on-click = let
+                            keyhintScript = pkgs.runCommand "keyhint.sh" { } ''
+                                substitute ${./../dotfiles/waybar/scripts/keyhint.sh} $out \
+                                    --replace "@yad_path@" "${pkgs.yad}/bin/yad"
+                            '';
+                        in
+                        "${pkgs.bash}/bin/sh ${keyhintScript}";
+                    };
+                };
+            };
+            style = (builtins.readFile ./../dotfiles/waybar/style.css);
+        };
+
         # ====== Dotfiles ======
         home.file = {
             ".config/sway/config".source = ./../dotfiles/sway/config;
@@ -74,21 +97,6 @@
             ".config/sway/config.d/theme".source = ./../dotfiles/sway/config.d/theme;
             ".config/sway/scripts/advance_workspace.sh" = { source = ./../dotfiles/sway/scripts/advance_workspace.sh; executable = true; };
             ".config/sway/scripts/bluetooth_toggle.sh" = { source = ./../dotfiles/sway/scripts/bluetooth_toggle.sh; executable = true; };
-            ".config/sway/scripts/cheatsheet_hint.sh" = { source = ./../dotfiles/sway/scripts/cheatsheet_hint.sh; executable = true; };
-            ".config/sway/scripts/hidpi_1.5.sh" = { source = ./../dotfiles/sway/scripts/hidpi_1.5.sh; executable = true; };
-            ".config/sway/scripts/import-gsettings" = { source = ./../dotfiles/sway/scripts/import-gsettings; executable = true; };
-            ".config/sway/scripts/screenshot_display.sh" = { source = ./../dotfiles/sway/scripts/screenshot_display.sh; executable = true; };
-            ".config/sway/scripts/screenshot_window.sh" = { source = ./../dotfiles/sway/scripts/screenshot_window.sh; executable = true; };
-            ".config/sway/scripts/swayfader.py" = { source = ./../dotfiles/sway/scripts/swayfader.py; executable = true; };
-            ".config/waybar/config".source =
-              let
-                configFile = ./../dotfiles/waybar/config;
-              in
-              pkgs.runCommand "waybar-config" { } ''
-                substitute ${configFile} $out \
-                  --replace "@sh_path@" "${pkgs.bash}/bin/sh"
-              '';
-            ".config/waybar/style.css".source = ./../dotfiles/waybar/style.css;
             ".config/waybar/scripts/keyhint.sh" = {
                 executable = true;
                 source = pkgs.runCommand "keyhint.sh" { } ''
@@ -96,6 +104,11 @@
                         --replace "@yad_path@" "${pkgs.yad}/bin/yad"
                 '';
             };
+            ".config/sway/scripts/hidpi_1.5.sh" = { source = ./../dotfiles/sway/scripts/hidpi_1.5.sh; executable = true; };
+            ".config/sway/scripts/import-gsettings" = { source = ./../dotfiles/sway/scripts/import-gsettings; executable = true; };
+            ".config/sway/scripts/screenshot_display.sh" = { source = ./../dotfiles/sway/scripts/screenshot_display.sh; executable = true; };
+            ".config/sway/scripts/screenshot_window.sh" = { source = ./../dotfiles/sway/scripts/screenshot_window.sh; executable = true; };
+            ".config/sway/scripts/swayfader.py" = { source = ./../dotfiles/sway/scripts/swayfader.py; executable = true; };
             ".config/foot/foot.ini".source =
               let
                 configFile = ./../dotfiles/foot/foot.ini;
