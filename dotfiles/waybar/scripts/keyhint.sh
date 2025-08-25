@@ -114,4 +114,4 @@ cheat=(
     "<span font='$font 14'> + Shift + </span><span font='$font 18'>󰰃</span>"
 )
 
-yad "${cheat[@]}"
+@yad_path@ "${cheat[@]}"
