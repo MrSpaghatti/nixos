@@ -21,6 +21,7 @@
       "packages.nix"
       "user.nix"
       "home.nix"
+      "vnc.nix"
     ]);
 
 	system.stateVersion = "25.05";
