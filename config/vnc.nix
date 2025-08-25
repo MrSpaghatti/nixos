@@ -9,7 +9,7 @@
       Type = "simple";
       User = "spag";
       ExecStart = ''
-        ${pkgs.wayvnc}/bin/wayvnc
+        ${pkgs.wayvnc}/bin/wayvnc 0.0.0.0
       '';
       Restart = "always";
       RestartSec = 10;
