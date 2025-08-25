@@ -53,6 +53,7 @@
 		dex
 		swayr
 		python3
+		yad
 
 		# Shell & Prompt
 		fish # shell
