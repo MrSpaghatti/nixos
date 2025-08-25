@@ -137,7 +137,7 @@
         "interval": 30,
         // See example config for sending signal to Waybar in ~/.config/sway/config.d/input
         "signal": 1,
-        "on-click": "sh -c '$HOME/.config/waybar/scripts/keyhint.sh'",
+        "on-click": "@sh_path@ -c '$HOME/.config/waybar/scripts/keyhint.sh'",
     },
 
     "group/resources": {

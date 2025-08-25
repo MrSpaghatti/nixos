@@ -80,7 +80,14 @@
             ".config/sway/scripts/screenshot_display.sh" = { source = ./../dotfiles/sway/scripts/screenshot_display.sh; executable = true; };
             ".config/sway/scripts/screenshot_window.sh" = { source = ./../dotfiles/sway/scripts/screenshot_window.sh; executable = true; };
             ".config/sway/scripts/swayfader.py" = { source = ./../dotfiles/sway/scripts/swayfader.py; executable = true; };
-            ".config/waybar/config".source = ./../dotfiles/waybar/config;
+            ".config/waybar/config".source =
+              let
+                configFile = ./../dotfiles/waybar/config;
+              in
+              pkgs.runCommand "waybar-config" { } ''
+                substitute ${configFile} $out \
+                  --replace "@sh_path@" "${pkgs.bash}/bin/sh"
+              '';
             ".config/waybar/style.css".source = ./../dotfiles/waybar/style.css;
             ".config/waybar/scripts/keyhint.sh" = {
                 executable = true;
