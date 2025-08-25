@@ -82,6 +82,7 @@
             ".config/sway/scripts/swayfader.py" = { source = ./../dotfiles/sway/scripts/swayfader.py; executable = true; };
             ".config/waybar/config".source = ./../dotfiles/waybar/config;
             ".config/waybar/style.css".source = ./../dotfiles/waybar/style.css;
+            ".config/waybar/scripts/keyhint.sh" = { source = ./../dotfiles/waybar/scripts/keyhint.sh; executable = true; };
             ".config/foot/foot.ini".source =
               let
                 configFile = ./../dotfiles/foot/foot.ini;
