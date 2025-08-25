@@ -56,7 +56,24 @@
 
         programs.waybar = {
             enable = true;
-            settings = builtins.fromJSON (builtins.readFile ./../dotfiles/waybar/config);
+            settings = {
+                mainBar = (builtins.fromJSON (builtins.readFile ./../dotfiles/waybar/config)) // {
+                    "custom/keyboard-layout" = {
+                        exec = "i=$(swaymsg -t get_inputs); echo \"$i\" | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4";
+                        format = "";
+                        "tooltip-format" = "L󰍽: cheatsheet\nLayout: {0}";
+                        interval = 30;
+                        signal = 1;
+                        on-click = let
+                            keyhintScript = pkgs.runCommand "keyhint.sh" { } ''
+                                substitute ${./../dotfiles/waybar/scripts/keyhint.sh} $out \
+                                    --replace "@yad_path@" "${pkgs.yad}/bin/yad"
+                            '';
+                        in
+                        "${pkgs.bash}/bin/sh ${keyhintScript}";
+                    };
+                };
+            };
             style = (builtins.readFile ./../dotfiles/waybar/style.css);
         };
 
