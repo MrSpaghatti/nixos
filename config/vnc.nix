@@ -8,6 +8,7 @@
     serviceConfig = {
       Type = "simple";
       User = "spag";
+      PassEnvironment = [ "XDG_RUNTIME_DIR" "WAYLAND_DISPLAY" ];
       ExecStart = ''
         ${pkgs.wayvnc}/bin/wayvnc 0.0.0.0
       '';
