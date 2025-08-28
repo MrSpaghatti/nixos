@@ -13,6 +13,8 @@
       '';
       Restart = "always";
       RestartSec = 10;
+      StandardOutput = "file:/tmp/wayvnc.log";
+      StandardError = "file:/tmp/wayvnc.log";
     };
   };
 }
