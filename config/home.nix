@@ -77,6 +77,22 @@
             style = (builtins.readFile ./../dotfiles/waybar/style.css);
         };
 
+        systemd.user.services.wayvnc = {
+            Unit = {
+                Description = "wayvnc server";
+                After = [ "graphical-session.target" ];
+                PartOf = "graphical-session.target";
+            };
+            Install = {
+                WantedBy = [ "graphical-session.target" ];
+            };
+            Service = {
+                ExecStart = "${pkgs.wayvnc}/bin/wayvnc 0.0.0.0";
+                Restart = "always";
+                RestartSec = 10;
+            };
+        };
+
         # ====== Dotfiles ======
         home.file = {
             ".config/sway/config".source = ./../dotfiles/sway/config;
