@@ -54,7 +54,13 @@
 			platformTheme.name = "gtk";
 		};
 
-        programs.waybar.enable = false;
+        programs.waybar = {
+            enable = true;
+            settings = builtins.fromJSON (builtins.readFile ./../dotfiles/waybar/config);
+            style = (builtins.readFile ./../dotfiles/waybar/style.css);
+        };
+
+        systemd.user.services.waybar.enable = false;
 
         systemd.user.services.wayvnc = {
             Unit = {
