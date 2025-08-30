@@ -56,7 +56,6 @@
 
         programs.waybar = {
             enable = true;
-            style = (builtins.readFile ./../dotfiles/waybar/style.css);
             settings = {
                 layer = "top";
                 position = "top";
@@ -119,23 +118,6 @@
                     icon-spacing = 4;
                     icon-size = 18;
                     transition-duration = 250;
-                    modules = [
-                        {
-                            type = "screenshare";
-                            tooltip = true;
-                            tooltip-icon-size = 24;
-                        }
-                        {
-                            type = "audio-out";
-                            tooltip = true;
-                            tooltip-icon-size = 24;
-                        }
-                        {
-                            type = "audio-in";
-                            tooltip = true;
-                            tooltip-icon-size = 24;
-                        }
-                    ];
                 };
                 "group/updates" = {
                     orientation = "inherit";
@@ -145,10 +127,6 @@
                         "transition-left-to-right" = false;
                         "click-to-reveal" = false;
                     };
-                    modules = [
-                        "custom/updates"
-                        "custom/pacman"
-                    ];
                 };
                 "custom/updates" = {
                     format = "{icon}{0}";
@@ -189,11 +167,6 @@
                         "transition-left-to-right" = true;
                         "click-to-reveal" = true;
                     };
-                    modules = [
-                        "cpu"
-                        "temperature"
-                        "disk"
-                    ];
                 };
                 cpu = {
                     interval = 5;
@@ -256,13 +229,6 @@
                         "transition-left-to-right" = true;
                         "click-to-reveal" = true;
                     };
-                    modules = [
-                        "custom/settings"
-                        "idle_inhibitor"
-                        "backlight"
-                        "bluetooth"
-                        "tray"
-                    ];
                 };
                 "custom/settings" = {
                     format = "";
@@ -327,14 +293,6 @@
                         "children-class" = "power-drawer";
                         "transition-left-to-right" = true;
                     };
-                    modules = [
-                        "custom/power"
-                        "custom/reboot"
-                        "custom/reboot-uefi"
-                        "custom/log-off"
-                        "custom/suspend"
-                        "custom/lock"
-                    ];
                 };
                 "custom/power" = {
                     format = "⏻";
@@ -367,6 +325,7 @@
                     "tooltip-format" = "Lock";
                 };
             };
+            style = (builtins.readFile ./../dotfiles/waybar/style.css);
         };
 
         systemd.user.services.wayvnc = {
@@ -405,6 +364,13 @@
             ".config/sway/config.d/theme".source = ./../dotfiles/sway/config.d/theme;
             ".config/sway/scripts/advance_workspace.sh" = { source = ./../dotfiles/sway/scripts/advance_workspace.sh; executable = true; };
             ".config/sway/scripts/bluetooth_toggle.sh" = { source = ./../dotfiles/sway/scripts/bluetooth_toggle.sh; executable = true; };
+            ".config/waybar/scripts/keyhint.sh" = {
+                executable = true;
+                source = pkgs.runCommand "keyhint.sh" { } ''
+                    substitute ${./../dotfiles/waybar/scripts/keyhint.sh} $out \
+                        --replace "@yad_path@" "${pkgs.yad}/bin/yad"
+                '';
+            };
             ".config/sway/scripts/hidpi_1.5.sh" = { source = ./../dotfiles/sway/scripts/hidpi_1.5.sh; executable = true; };
             ".config/sway/scripts/import-gsettings" = { source = ./../dotfiles/sway/scripts/import-gsettings; executable = true; };
             ".config/sway/scripts/screenshot_display.sh" = { source = ./../dotfiles/sway/scripts/screenshot_display.sh; executable = true; };
