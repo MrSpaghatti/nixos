@@ -56,8 +56,276 @@
 
         programs.waybar = {
             enable = true;
-            settings = builtins.fromJSON (builtins.readFile ./../dotfiles/waybar/config);
             style = builtins.readFile ./../dotfiles/waybar/style.css;
+            settings = {
+                layer = "top";
+                position = "top";
+                "modules-left" = [
+                    "custom/launcher"
+                    "sway/workspaces"
+                    "sway/window"
+                ];
+                "custom/launcher" = {
+                    format = "<span size='x-large'></span>";
+                    "on-click" = "exec nwg-drawer";
+                    tooltip = false;
+                };
+                "sway/workspaces" = {
+                    "disable-scroll" = true;
+                    "all-outputs" = true;
+                    format = "{icon}";
+                    "format-icons" = {
+                        "3" = "3";
+                        "4" = "4";
+                        "5" = "5";
+                        "6" = "6";
+                        "7" = "7";
+                        "8" = "8";
+                        "9" = "9";
+                        "10" = "10";
+                    };
+                };
+                "sway/window" = {
+                    format = "{}";
+                    "max-length" = 120;
+                    "on-click" = "swayr merge-config ~/.config/swayr/waybar_config.toml; swayr switch-workspace-or-window; swayr reload-config";
+                };
+                "modules-center" = [
+                    "network"
+                ];
+                network = {
+                    "format-disabled" = " Disabled";
+                    "format-wifi" = " {bandwidthDownBits:>} 󰶡 {bandwidthUpBits:>} 󰶣";
+                    "tooltip-format-wifi" = "ESSID: {essid}";
+                    "format-ethernet" = "󰈀 {bandwidthDownBits:>} 󰶡 {bandwidthUpBits:>} 󰶣";
+                    "tooltip-format-ethernet" = "{ifname}: {ipaddr}/{cidr}";
+                    "format-disconnected" = " Disconnected";
+                    "on-click" = "${pkgs.foot}/bin/foot -T waybar_nmtui -e nmtui";
+                    interval = 2;
+                };
+                "modules-right" = [
+                    "privacy"
+                    "group/updates"
+                    "custom/keyboard-layout"
+                    "group/resources"
+                    "memory"
+                    "wireplumber"
+                    "battery"
+                    "group/settings"
+                    "clock"
+                    "group/power"
+                ];
+                privacy = {
+                    "icon-spacing" = 4;
+                    "icon-size" = 18;
+                    "transition-duration" = 250;
+                };
+                "group/updates" = {
+                    orientation = "inherit";
+                    drawer = {
+                        "transition-duration" = 500;
+                        "children-class" = "updates-drawer";
+                        "transition-left-to-right" = false;
+                        "click-to-reveal" = false;
+                    };
+                };
+                "custom/updates" = {
+                    format = "{icon}{0}";
+                    "return-type" = "json";
+                    "format-icons" = {
+                        "has-updates" = " ";
+                        "updated" = "";
+                    };
+                    "exec-if" = "which waybar-module-pacman-updates";
+                    exec = "waybar-module-pacman-updates --no-zero-output --interval-seconds 5 --network-interval-seconds 300 --tooltip-align-columns";
+                    "on-click" = "${pkgs.foot}/bin/foot -T waybar_pacseek -e pacseek -ui";
+                };
+                "custom/pacman" = {
+                    format = "󰮯";
+                    "tooltip-format" = "L󰍽: Pacseek\nR󰍽: Upgrade";
+                    "on-click" = "${pkgs.foot}/bin/foot -T waybar_pacseek -e pacseek";
+                    "on-click-right" = "${pkgs.foot}/bin/foot -T waybar_garuda-update -e bash -c 'garuda-update && (read -p \"Update complete. Press Enter to exit.\" && exit 0) || (read -p \"Update failed. Press Enter to exit.\" && exit 1)'";
+                };
+                "custom/keyboard-layout" = {
+                    exec = "i=$(swaymsg -t get_inputs); echo \"$i\" | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4";
+                    format = "";
+                    "tooltip-format" = "L󰍽: cheatsheet\nLayout: {0}";
+                    interval = 30;
+                    signal = 1;
+                    "on-click" = let
+                        keyhintScript = pkgs.runCommand "keyhint.sh" { } ''
+                            substitute ${./../dotfiles/waybar/scripts/keyhint.sh} $out \
+                                --replace "@yad_path@" "${pkgs.yad}/bin/yad"
+                        '';
+                    in
+                    "${pkgs.bash}/bin/sh ${keyhintScript}";
+                };
+                "group/resources" = {
+                    orientation = "inherit";
+                    drawer = {
+                        "transition-duration" = 500;
+                        "children-class" = "resources-drawer";
+                        "transition-left-to-right" = true;
+                        "click-to-reveal" = true;
+                    };
+                };
+                cpu = {
+                    interval = 5;
+                    format = " {usage}%";
+                    states = {
+                        warning = 70;
+                        critical = 90;
+                    };
+                };
+                temperature = {
+                    "critical-threshold" = 80;
+                    "format-critical" = " {temperatureC}°C";
+                    format = " {temperatureC}°C";
+                    "tooltip-format" = "  󰍽: s-tui\n {temperatureC}° Celsius\n{temperatureF}° Fahrenheit\n{temperatureK}° Kelvin";
+                    "on-click" = "${pkgs.foot}/bin/foot -T waybar_s-tui -e s-tui";
+                };
+                disk = {
+                    interval = 600;
+                    format = "󰋊 {percentage_used}%";
+                    path = "/";
+                    "tooltip-format" = "    󰍽: dua\nTotal: {total}\n Used: {used} ({percentage_used}%)\n Free: {free} ({percentage_free}%)";
+                    "on-click" = "${pkgs.foot}/bin/foot -T waybar_dua -e dua i /";
+                };
+                memory = {
+                    interval = 5;
+                    format = " {}%";
+                    "on-click" = "${pkgs.foot}/bin/foot -T waybar_btm -e btm";
+                    states = {
+                        warning = 70;
+                        critical = 90;
+                    };
+                    "tooltip-format" = "        󰍽: btm\n   Memory: {total} GiB\n   In use: {used} GiB ({percentage}%)\nAvailable: {avail} GiB\n     Swap: {swapTotal} GiB\n   In use: {swapUsed} GiB ({swapPercentage}%)\nAvailable: {swapAvail} GiB";
+                };
+                wireplumber = {
+                    format = "{icon} {volume}%";
+                    "format-muted" = "󰝟 muted";
+                    "on-click" = "pavucontrol";
+                    "on-click-right" = "pamixer --toggle-mute";
+                    "format-icons" = ["󰕿" "󰖀" "󰕾"];
+                    "tooltip-format" = "L󰍽: pavucontrol\nR󰍽: Toggle mute\nNode: {node_name}";
+                };
+                battery = {
+                    states = {
+                        warning = 20;
+                        critical = 10;
+                    };
+                    format = "{icon} {capacity}%";
+                    "format-charging" = "{icon} {capacity}% ";
+                    "format-plugged" = "{icon} {capacity}% ";
+                    "format-full" = "{icon} {capacity}% ";
+                    "format-icons" = ["" "" "" "" ""];
+                    "tooltip-format" = "󰍽: battop\n{timeTo}";
+                    "on-click" = "${pkgs.foot}/bin/foot -T waybar_battop -e battop";
+                };
+                "group/settings" = {
+                    orientation = "inherit";
+                    drawer = {
+                        "transition-duration" = 500;
+                        "children-class" = "settings-drawer";
+                        "transition-left-to-right" = true;
+                        "click-to-reveal" = true;
+                    };
+                };
+                "custom/settings" = {
+                    format = "";
+                    "tooltip-format" = "Settings";
+                };
+                idle_inhibitor = {
+                    format = "{icon}";
+                    "format-icons" = {
+                        activated = " ";
+                        deactivated = " ";
+                    };
+                    "tooltip-format-activated" = "Idle Inhibitor Activated";
+                    "tooltip-format-deactivated" = "Idle Inhibitor Deactivated";
+                };
+                backlight = {
+                    format = "{icon} {percent}%";
+                    "format-icons" = ["󰄰" "󰪞" "󰪟" "󰪠" "󰪡" "󰪢" "󰪣" "󰪤" "󰪥"];
+                    "tooltip-format" = "Backlight (Scroll): {percent:}%";
+                    "on-scroll-down" = "brightnessctl -c backlight set 5%-";
+                    "on-scroll-up" = "brightnessctl -c backlight set +5%";
+                };
+                bluetooth = {
+                    format = "󰂯 {status}:{num_connections}";
+                    "format-on" = "󰂯";
+                    "format-off" = "󰂲";
+                    "format-disabled" = "";
+                    "format-icons" = ["󰤾" "󰤿" "󰥀" "󰥁" "󰥂" "󰥃" "󰥄" "󰥅" "󰥆" "󰥈"];
+                    "tooltip-format" = "L󰍽: bluetui\nR󰍽: bluetoothctl power on/off\nController: {controller_alias}\t{controller_address}\nConnected devices: {num_connections}";
+                    "tooltip-format-connected" = "L󰍽: bluetui\nR󰍽: bluetoothctl power on/off\nController: {controller_alias}\t{controller_address}\nConnected devices: {num_connections}\nDevice---------------Address------------Battery\n{device_enumerate}";
+                    "tooltip-format-enumerate-connected" = "{device_alias:<20} {device_address:<18}";
+                    "tooltip-format-enumerate-connected-battery" = "{device_alias:<20.20} {device_address:<18.18} {icon} {device_battery_percentage}%";
+                    "on-click" = "${pkgs.foot}/bin/foot -T waybar_bluetui -e bluetui";
+                    "on-click-right" = "~/.config/sway/scripts/bluetooth_toggle.sh";
+                };
+                tray = {
+                    "icon-size" = 16;
+                    spacing = 10;
+                };
+                clock = {
+                    format = "󰅐 {:%OI:%M %p}";
+                    "on-click" = "${pkgs.foot}/bin/foot -T waybar_calcurse -e calcurse";
+                    "tooltip-format" = " {:%A %m/%d}\n\n<tt><small>{calendar}</small></tt>";
+                    calendar = {
+                        "on-scroll" = 1;
+                        format = {
+                            months = "<span color='#ffead3'><b>{}</b></span>";
+                            days = "<span color='#ecc6d9'><b>{}</b></span>";
+                            weeks = "<span color='#99ffdd'><b>W{}</b></span>";
+                            weekdays = "<span color='#ffcc66'><b>{}</b></span>";
+                            today = "<span color='#ff6699'><b><u>{}</u></b></span>";
+                        };
+                    };
+                    actions = {
+                        "on-scroll-up" = "shift_up";
+                        "on-scroll-down" = "shift_down";
+                    };
+                };
+                "group/power" = {
+                    orientation = "inherit";
+                    drawer = {
+                        "transition-duration" = 500;
+                        "children-class" = "power-drawer";
+                        "transition-left-to-right" = true;
+                    };
+                };
+                "custom/power" = {
+                    format = "⏻";
+                    "on-click" = "systemctl poweroff";
+                    "tooltip-format" = "Shutdown";
+                };
+                "custom/reboot" = {
+                    format = "";
+                    "on-click" = "systemctl reboot";
+                    "tooltip-format" = "Reboot";
+                };
+                "custom/reboot-uefi" = {
+                    format = "";
+                    "on-click" = "systemctl reboot --firmware-setup";
+                    "tooltip-format" = "Reboot to UEFI";
+                };
+                "custom/log-off" = {
+                    format = "󰍃";
+                    "on-click" = "swaymsg exit";
+                    "tooltip-format" = "Log out";
+                };
+                "custom/suspend" = {
+                    format = "󰤄";
+                    "on-click" = "systemctl suspend";
+                    "tooltip-format" = "Suspend";
+                };
+                "custom/lock" = {
+                    format = "󰌾";
+                    "on-click" = "gtklock";
+                    "tooltip-format" = "Lock";
+                };
+            };
         };
 
         systemd.user.services.wayvnc = {
